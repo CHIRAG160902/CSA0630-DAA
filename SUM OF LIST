@@ -1,0 +1,50 @@
+#include <stdio.h>
+
+#define MAX_SIZE 100
+
+void printSubset(int arr[], int n, int subset[], int subsetSize) {
+    for (int i = 0; i < subsetSize; i++) {
+        printf("%d ", arr[subset[i]]);
+    }
+    printf("\n");
+}
+
+void sumOfSubsets(int arr[], int n, int target, int subset[], int subsetSize, int startIndex) {
+    if (target == 0) {
+        printSubset(arr, n, subset, subsetSize);
+        return;
+    }
+
+    if (target < 0 || startIndex >= n) {
+        return;
+    }
+
+ 
+    subset[subsetSize] = startIndex;
+    sumOfSubsets(arr, n, target - arr[startIndex], subset, subsetSize + 1, startIndex + 1);
+
+ 
+    sumOfSubsets(arr, n, target, subset, subsetSize, startIndex + 1);
+}
+
+int main() {
+    int arr[MAX_SIZE], n, target;
+
+    printf("Enter the size of the array: ");
+    scanf("%d", &n);
+
+    printf("Enter the elements of the array:\n");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    printf("Enter the target sum: ");
+    scanf("%d", &target);
+
+    int subset[MAX_SIZE];
+
+    printf("Subsets that sum up to %d:\n", target);
+    sumOfSubsets(arr, n, target, subset, 0, 0);
+
+    return 0;
+}
